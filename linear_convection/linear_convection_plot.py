@@ -4,8 +4,6 @@ import numpy as np
 
 with open("res.txt") as file:
     raw_data = file.readlines()
-    # data_transposed = data.T
-    # data_transposed.columns = ["u_initial", "u_final"]
 
 data = [[],[]]
 
@@ -17,7 +15,7 @@ x = np.linspace(0, 2, len(data[0]))
 plt.figure()
 plt.plot(x, data[0], label="Initial conditions")
 plt.plot(x, data[1], label="Final values")
-plt.legend(frameon=False)
+plt.legend(ncols=2, bbox_to_anchor=(0.5,1.15), loc="upper center")
 plt.xlabel(r"$x$")
 plt.ylabel(r"$u(x)$")
 plt.show()

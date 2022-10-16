@@ -2,6 +2,7 @@
 #include <vector>
 #include <fstream>
 #include <chrono>
+#include <cstring>
 
 void print(const std::vector<double> &v)
 {
@@ -35,14 +36,36 @@ void write_vector(const std::vector<double> &v)
 	outFile.close();
 }
 
-int main() 
+int main(int argc, char **argv)
 {
-	int nx {41};
-	int nt {25};
-	double dt {0.025};
-	double dx {2/(static_cast<double>(nx) - 1)};
-	double c {1};
+	if (argc == 2 && strcmp(argv[1], "--help") == 0)
+	{
+		std::cout << "Linear convection solver over [0, 2]\n";
+		std::cout << "With hat-function initial condtiison.\n";
+		std::cout << "Usage: linear_convection nx nt dt c\n";
+		std::cout << "Where:\n";
+		std::cout << "\t nx: number of x grid points (41)\n";
+		std::cout << "\t nt: number of timesteps (25)\n";
+		std::cout << "\t dt: timestep (0.025)\n";
+		std::cout << "\t c: wave speed (1)\n" << std::endl;
+			
+		return 0;
+	}
 
+	if (argc != 5)
+	{
+		std::cout << "Incorrect number of arguments\n";
+		std::cout << "Usage: linear_convection nx nt dt c\n";
+	
+		return -1;
+	}	
+	
+	int nx {std::stoi(argv[1])};
+	int nt {std::stoi(argv[2])};
+	double dt {std::stod(argv[3])};
+	double c {std::stod(argv[4])};
+
+	double dx {2/(static_cast<double>(nx) - 1)};
 	std::vector<double> u(nx, 1);
 
 	set_hat_ic(u, dx);
